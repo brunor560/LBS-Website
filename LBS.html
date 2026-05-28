@@ -333,11 +333,11 @@
             <span style="display: block; width: 24px; height: 2px; background: #ffffff;"></span>
         </div>
         <div id="dropdown-menu" style="display: none; position: absolute; top: 60px; left: 1rem; background: #1e2526; border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 0.5rem 0; min-width: 180px; z-index: 999;">
-            <a href="#home" style="display: block; padding: 0.75rem 1.25rem; color: #fff; text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: background 0.2s;" onmouseover="this.style.background='#2d3e45'" onmouseout="this.style.background='transparent'">Home</a>
-            <a href="#coaches" style="display: block; padding: 0.75rem 1.25rem; color: #fff; text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: background 0.2s;" onmouseover="this.style.background='#2d3e45'" onmouseout="this.style.background='transparent'">Coaching Info</a>
-            <a href="#insta" style="display: block; padding: 0.75rem 1.25rem; color: #fff; text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: background 0.2s;" onmouseover="this.style.background='#2d3e45'" onmouseout="this.style.background='transparent'">Instagram Feed</a>
-            <a href="#vid" style="display: block; padding: 0.75rem 1.25rem; color: #fff; text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: background 0.2s;" onmouseover="this.style.background='#2d3e45'" onmouseout="this.style.background='transparent'">Long-Form Videos</a>
-
+            <a href="#home" style="display: block; padding: 0.75rem 1.25rem; color: #fff; text-decoration: none; font-size: 0.9rem; font-weight: 500;" onmouseover="this.style.background='#2d3e45'" onmouseout="this.style.background='transparent'">Home</a>
+            <a href="#coaches" style="display: block; padding: 0.75rem 1.25rem; color: #fff; text-decoration: none; font-size: 0.9rem; font-weight: 500;" onmouseover="this.style.background='#2d3e45'" onmouseout="this.style.background='transparent'">Coaching Info</a>
+            <a href="#merch" style="display: block; padding: 0.75rem 1.25rem; color: #fff; text-decoration: none; font-size: 0.9rem; font-weight: 500;" onmouseover="this.style.background='#2d3e45'" onmouseout="this.style.background='transparent'">LBS Merch</a>
+            <a href="#instagram" style="display: block; padding: 0.75rem 1.25rem; color: #fff; text-decoration: none; font-size: 0.9rem; font-weight: 500;" onmouseover="this.style.background='#2d3e45'" onmouseout="this.style.background='transparent'">Instagram</a>
+            <a href="#youtube" style="display: block; padding: 0.75rem 1.25rem; color: #fff; text-decoration: none; font-size: 0.9rem; font-weight: 500;" onmouseover="this.style.background='#2d3e45'" onmouseout="this.style.background='transparent'">Long-Form Videos</a>
         </div>
     </div>
     <a href="#home" class="nav-brand">
@@ -388,6 +388,16 @@
                 <p style="font-size: 0.85rem; font-family: 'Jost', sans-serif; font-weight: bold; color: #8aa4aa;">National-Level Coach</p>
             </div>
         </div>
+</section>
+
+<!-- INSTAGRAM -->
+<section id="instagram" style="background: var(--bg-dark); padding: 5rem 4rem; text-align: center;">
+    <h2 style="font-family: 'Zen Dots', sans-serif; margin-bottom: 2rem;">Latest From Instagram</h2>
+    <p style="font-family: 'Jost', sans-serif; color: #8aa4aa; margin-bottom: 2rem;">Follow us <a href="https://www.instagram.com/lbs.systems/" target="_blank" style="color: #1a8a7a;">@LBS.Systems</a> for the latest updates!</p>
+    <!-- Elfsight Instagram Feed | Untitled Instagram Feed -->
+    <script src="https://elfsightcdn.com/platform.js" async></script>
+    <div class="elfsight-app-e286de38-9aad-4d23-95c3-127ca4317241" data-elfsight-app-lazy></div>
+    <div id="instagram-embed"></div>
 </section>
 
 <!-- MERCH -->
@@ -447,19 +457,37 @@
     </div>
 </section>
 
+<!-- YOUTUBE -->
+<section id="youtube" style="background: var(--bg-dark); padding: 5rem 4rem; text-align: center;">
+    <h2 style="font-family: 'Zen Dots', sans-serif; margin-bottom: 2rem;">Latest From YouTube</h2>
+    <div style="max-width: 800px; margin: 0 auto;">
+        <iframe
+                width="100%"
+                height="450"
+                src="https://www.youtube.com/watch?v=n4kluqkCymw"
+                title="Pikmin sound effect"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+                style="border-radius: 14px;">
+        </iframe>
+    </div>
+</section>
+
 <!-- FOOTER -->
 <footer>
     <div>
-        <div class="footer-brand">LBS Systems</div>
-        <div class="footer-sub">Lifting Beyond Satisfaction</div>
+        <div class="footer-brand" style="font-family: 'Zen Dots', sans-serif;">LBS Systems</div>
+        <div class="footer-sub" style="font-family: 'Zen Dots', sans-serif; font-style: italic;">Lifting Beyond Satisfaction</div>
     </div>
     <ul class="footer-links">
         <li><a href="#home">Home</a></li>
         <li><a href="#coaches">Coaching Info</a></li>
-        <li><a href="#merch">LBS Merch</a></li>
-        <li><a href="https://www.bonfire.com/store/lbs-systems/" target="_blank" rel="noopener">Bonfire Store</a></li>
+        <li><a href="https://www.bonfire.com/store/lbs-systems/" target="_blank" rel="noopener">LBS Merch</a></li>
+        <li><a href="https://www.instagram.com/lbs.systems/" target="_blank" rel="noopener">Instagram</a></li>
+        <li><a href="https://www.instagram.com/lbs.systems/" target="_blank" rel="noopener">YouTube</a></li>
     </ul>
-    <div style="font-size:0.75rem; color:#4a6068;">© 2025 LBS Systems. Est. 2025.</div>
+    <div style="font-size:0.75rem; color:#4a6068; font-family: 'Jost', sans-serif;">© 2025 LBS Systems. Est. 2025.</div>
 </footer>
 
 <script>
