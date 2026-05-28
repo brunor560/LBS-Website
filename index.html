@@ -5,7 +5,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&family=Zen+Dots&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>LBS Systems</title>
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -13,22 +15,21 @@
         :root {
             --bg-dark:   #1e2526;
             --bg-mid:    #2d3e45;
-            --bg-card:   #ffffff;
             --teal:      #1a8a7a;
-            --teal-dark: #14706300;
             --teal-hover:#16796b;
             --text:      #ffffff;
             --text-muted:#c5d0d2;
             --radius:    14px;
         }
 
-        html { scroll-behavior: smooth; }
+        html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Jost', sans-serif;
             background: var(--bg-dark);
             color: var(--text);
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
         /* ── NAV ── */
@@ -36,369 +37,432 @@
             position: fixed; top: 0; left: 0; right: 0; z-index: 200;
             background: var(--bg-dark);
             display: flex; align-items: center; justify-content: space-between;
-            padding: 0 2.5rem;
-            height: 60px;
+            padding: 0 1.2rem;
+            height: 56px;
+            border-bottom: 1px solid rgba(255,255,255,0.07);
         }
 
-        .nav-left {
-            display: flex; gap: 2rem; align-items: center;
+        .nav-left { display: flex; align-items: center; }
+
+        .hamburger {
+            cursor: pointer;
+            display: flex; flex-direction: column; gap: 5px;
+            padding: 10px; /* larger touch target */
+            margin: -10px;
+        }
+        .hamburger span {
+            display: block; width: 22px; height: 2px; background: #ffffff;
+            transition: background 0.2s;
         }
 
-        .nav-left a {
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: var(--text);
+        #dropdown-menu {
+            display: none;
+            position: absolute; top: 56px; left: 0; right: 0;
+            background: #1e2526;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            z-index: 999;
+        }
+
+        #dropdown-menu a {
+            display: block;
+            padding: 1rem 1.5rem;
+            color: #fff;
             text-decoration: none;
-            transition: color 0.2s;
+            font-size: 1rem;
+            font-weight: 500;
+            font-family: 'Jost', sans-serif;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            -webkit-tap-highlight-color: transparent;
         }
-        .nav-left a:hover { color: #5ecfc3; }
+        #dropdown-menu a:active { background: #2d3e45; }
 
         .nav-brand {
             position: absolute; left: 50%; transform: translateX(-50%);
-            font-size: 1.05rem;
-            font-weight: 700;
-            letter-spacing: 0.04em;
-            color: var(--text);
-            text-decoration: none;
+        }
+        .nav-brand img {
+            height: 36px; width: auto; filter: invert(1);
         }
 
-        .nav-right {
-            display: flex; align-items: center; gap: 1rem;
-        }
+        .nav-right { display: flex; align-items: center; }
 
         .btn-teal {
             background: var(--teal);
             color: #fff;
             border: none;
             border-radius: 999px;
-            padding: 0.5rem 1.25rem;
-            font-size: 0.85rem;
-            font-weight: 600;
+            padding: 0.45rem 1rem;
+            font-size: 0.78rem;
+            font-weight: 700;
             cursor: pointer;
             text-decoration: none;
-            transition: background 0.2s, transform 0.15s;
             display: inline-flex; align-items: center;
+            -webkit-tap-highlight-color: transparent;
+            letter-spacing: 0.03em;
         }
-        .btn-teal:hover { background: var(--teal-hover); transform: translateY(-1px); }
-
-        .cart-icon {
-            color: var(--text);
-            font-size: 1.3rem;
-            cursor: pointer;
-            text-decoration: none;
-            display: flex; align-items: center;
-        }
+        .btn-teal:active { background: var(--teal-hover); }
 
         /* ── HERO ── */
         .hero {
-            min-height: 100vh;
+            min-height: 100svh;
             background: url('3.png') center center / cover no-repeat;
             display: flex; align-items: center; justify-content: center;
-            padding: 80px 4rem 4rem;
+            padding: 80px 1.5rem 3rem;
             position: relative;
-            overflow: hidden;
         }
 
-        /* subtle texture overlay */
         .hero::before {
             content: '';
             position: absolute; inset: 0;
-            background-image:
-                    radial-gradient(circle at 20% 50%, rgba(26,138,122,0.06) 0%, transparent 60%),
-                    radial-gradient(circle at 80% 50%, rgba(26,138,122,0.04) 0%, transparent 60%);
+            background: rgba(0,0,0,0.35);
             pointer-events: none;
         }
 
         .hero-inner {
-            max-width: 1100px; width: 100%;
-            display: grid; grid-template-columns: 1fr 1fr;
-            gap: 4rem; align-items: center;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
             position: relative; z-index: 1;
+            text-align: center;
         }
 
         .hero-text h1 {
-            font-size: clamp(2.8rem, 5vw, 4.2rem);
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 1rem;
+            font-family: 'Zen Dots', sans-serif;
+            font-size: clamp(1.8rem, 8vw, 2.8rem);
+            font-weight: 400;
+            white-space: nowrap;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
         }
 
         .hero-text p {
-            font-family: 'Dancing Script', cursive;
-            font-size: 1.7rem;
+            font-family: 'Jost', sans-serif;
+            font-size: clamp(1rem, 4vw, 1.3rem);
+            font-style: italic;
             color: var(--text-muted);
-            letter-spacing: 0.01em;
         }
 
-        /* LBS Logo SVG recreation */
         .lbs-logo-wrap {
             display: flex; align-items: center; justify-content: center;
+            width: 100%;
         }
 
         .lbs-logo {
-            width: 100%;
-            max-width: 600px;
+            width: min(85vw, 340px);
+            filter: invert(1);
         }
 
-        /* ── SECTION SHARED ── */
+        /* ── SECTIONS ── */
         .section {
             background: var(--bg-mid);
-            padding: 5rem 4rem;
+            padding: 3rem 1.25rem;
         }
 
-        .section-inner {
-            max-width: 1100px; margin: 0 auto;
-        }
+        .section-inner { max-width: 600px; margin: 0 auto; }
 
         .section-title {
-            font-size: 1.6rem;
-            font-weight: 800;
-            margin-bottom: 2.5rem;
+            font-family: 'Zen Dots', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 400;
+            margin-bottom: 1.5rem;
             color: var(--text);
         }
 
         /* ── MERCH ── */
         .merch-grid {
-            display: flex; gap: 1.5rem; flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
         }
 
         .merch-card {
             background: #fff;
             border-radius: var(--radius);
             overflow: hidden;
-            width: 260px;
             cursor: pointer;
             text-decoration: none;
             display: block;
-            transition: transform 0.2s, box-shadow 0.2s;
+            -webkit-tap-highlight-color: transparent;
+            transition: transform 0.15s;
         }
-        .merch-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 30px rgba(0,0,0,0.35);
-        }
+        .merch-card:active { transform: scale(0.97); }
 
         .merch-img {
-            width: 100%; height: 220px;
-            object-fit: cover;
-            background: #f0f0f0;
+            width: 100%;
+            aspect-ratio: 1;
             display: flex; align-items: center; justify-content: center;
             overflow: hidden;
         }
+        .merch-img.shirt { background: #1a1a1a; }
+        .merch-img.sticker { background: #222; }
 
-        /* Placeholder product images using CSS art */
-        .merch-img.shirt {
-            background: #1a1a1a;
-            position: relative;
-        }
-
-        .merch-img.sticker {
-            background: #2a2a2a;
-        }
-
-        .merch-info {
-            padding: 0.9rem 1rem 1rem;
-        }
+        .merch-info { padding: 0.65rem 0.75rem 0.75rem; }
 
         .merch-name {
-            font-size: 0.95rem;
+            font-size: 0.82rem;
             font-weight: 700;
             color: #111;
-            margin-bottom: 0.25rem;
+            margin-bottom: 0.2rem;
+            font-family: 'Jost', sans-serif;
         }
 
         .merch-price {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             font-weight: 500;
             color: #333;
+            font-family: 'Jost', sans-serif;
         }
 
         /* ── COACHES ── */
         .coaches {
             background: var(--bg-mid);
-            padding: 5rem 4rem;
+            padding: 3rem 1.25rem;
+            text-align: center;
         }
 
-        .coaches-inner {
-            max-width: 1100px; margin: 0 auto;
-            display: grid; grid-template-columns: 1fr 1fr;
-            gap: 5rem; align-items: center;
+        .coaches h2 {
+            font-family: 'Zen Dots', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 400;
+            margin-bottom: 0.75rem;
         }
 
-        .coaches-text h2 {
-            font-size: 1.7rem;
-            font-weight: 800;
-            margin-bottom: 1.2rem;
-        }
-
-        .coaches-text p {
-            font-size: 1rem;
+        .coaches-desc {
+            font-size: 0.95rem;
+            font-weight: 600;
             color: var(--text-muted);
-            line-height: 1.7;
-            margin-bottom: 2rem;
-            max-width: 380px;
+            line-height: 1.6;
+            margin: 0 auto 1.5rem;
+            max-width: 320px;
         }
+
+        .btn-teal-lg {
+            display: inline-block;
+            background: var(--teal);
+            color: #fff;
+            border-radius: 999px;
+            padding: 0.85rem 2rem;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-decoration: none;
+            font-family: 'Jost', sans-serif;
+            margin-bottom: 2rem;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .btn-teal-lg:active { background: var(--teal-hover); }
 
         .coaches-photos {
             display: grid;
-            grid-template-rows: 1fr 1fr;
-            gap: 6px;
-            border-radius: var(--radius);
-            overflow: hidden;
-            max-height: 620px;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            max-width: 600px;
+            margin: 0 auto;
         }
 
-        .coach-photo {
-            width: 100%; height: 300px;
+        .coach-card { text-align: center; }
+
+        .coach-card img {
+            width: 100%;
+            aspect-ratio: 3/4;
             object-fit: cover;
-            background: #3a4a52;
-            display: flex; align-items: center; justify-content: center;
-            color: #6a8a92;
-            font-size: 0.85rem;
-            font-weight: 500;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
+            border-radius: var(--radius);
+        }
+
+        .coach-name {
+            margin-top: 0.6rem;
+            font-family: 'Zen Dots', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 400;
+            color: #fff;
+        }
+
+        .coach-title {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #8aa4aa;
+            font-family: 'Jost', sans-serif;
+            margin-top: 0.2rem;
+        }
+
+        /* ── INSTAGRAM ── */
+        .instagram-section {
+            background: var(--bg-dark);
+            padding: 3rem 1.25rem;
+            text-align: center;
+        }
+
+        .instagram-section h2 {
+            font-family: 'Zen Dots', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 400;
+            margin-bottom: 1rem;
+        }
+
+        .instagram-section p {
+            font-family: 'Jost', sans-serif;
+            color: #8aa4aa;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .instagram-section a { color: var(--teal); }
+
+        /* ── YOUTUBE ── */
+        .youtube-section {
+            background: var(--bg-dark);
+            padding: 3rem 1.25rem;
+            text-align: center;
+        }
+
+        .youtube-section h2 {
+            font-family: 'Zen Dots', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 400;
+            margin-bottom: 1.5rem;
+        }
+
+        .video-wrap {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 */
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+
+        .video-wrap iframe {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            border: none;
+        }
+
+        /* ── DIVIDER ── */
+        .divider {
+            height: 3px;
+            background: linear-gradient(to right, transparent, var(--teal), transparent);
         }
 
         /* ── FOOTER ── */
         footer {
             background: var(--bg-dark);
             border-top: 1px solid rgba(255,255,255,0.07);
-            padding: 2rem 4rem;
-            display: flex; justify-content: space-between; align-items: center;
-            flex-wrap: wrap; gap: 1rem;
+            padding: 2rem 1.25rem;
+            text-align: center;
         }
 
         .footer-brand {
+            font-family: 'Zen Dots', sans-serif;
             font-size: 1rem;
-            font-weight: 700;
-            color: var(--text);
+            margin-bottom: 0.25rem;
         }
 
         .footer-sub {
-            font-size: 0.8rem;
+            font-family: 'Jost', sans-serif;
+            font-style: italic;
             color: #6a8a92;
-            font-family: 'Dancing Script', cursive;
-            font-size: 1rem;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
         }
 
         .footer-links {
-            display: flex; gap: 1.5rem; list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.5rem 1.25rem;
+            list-style: none;
+            margin-bottom: 1.5rem;
         }
+
         .footer-links a {
-            font-size: 0.8rem;
+            font-size: 0.82rem;
             color: #6a8a92;
             text-decoration: none;
-            transition: color 0.2s;
+            font-family: 'Jost', sans-serif;
+            padding: 0.25rem 0;
         }
-        .footer-links a:hover { color: #5ecfc3; }
+        .footer-links a:active { color: #5ecfc3; }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero-inner, .coaches-inner { grid-template-columns: 1fr; gap: 2rem; }
-            nav { padding: 0 1.2rem; }
-            .section, .coaches { padding: 3rem 1.5rem; }
-            footer { padding: 2rem 1.5rem; }
+        .footer-copy {
+            font-size: 0.75rem;
+            color: #4a6068;
+            font-family: 'Jost', sans-serif;
         }
 
-        /* Smooth fade in */
+        /* ── FADE IN ── */
         .fade-in {
-            opacity: 0; transform: translateY(20px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
+            opacity: 0; transform: translateY(16px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
         }
         .fade-in.visible { opacity: 1; transform: none; }
     </style>
 </head>
-<script>
-    function toggleMenu() {
-        const menu = document.getElementById('dropdown-menu');
-        menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
-    }
-
-    // Close menu when clicking anywhere else on the page
-    document.addEventListener('click', function(e) {
-        const menu = document.getElementById('dropdown-menu');
-        if (!e.target.closest('.hamburger') && !e.target.closest('#dropdown-menu')) {
-            menu.style.display = 'none';
-        }
-    });
-</script>
 <body>
 
 <!-- NAV -->
 <nav>
     <div class="nav-left">
-        <div class="hamburger" onclick="toggleMenu()" style="cursor: pointer; display: flex; flex-direction: column; gap: 5px;">
-            <span style="display: block; width: 24px; height: 2px; background: #ffffff;"></span>
-            <span style="display: block; width: 24px; height: 2px; background: #ffffff;"></span>
-            <span style="display: block; width: 24px; height: 2px; background: #ffffff;"></span>
-        </div>
-        <div id="dropdown-menu" style="display: none; position: absolute; top: 60px; left: 1rem; background: #1e2526; border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 0.5rem 0; min-width: 180px; z-index: 999;">
-            <a href="#home" style="display: block; padding: 0.75rem 1.25rem; color: #fff; text-decoration: none; font-size: 0.9rem; font-weight: 500;" onmouseover="this.style.background='#2d3e45'" onmouseout="this.style.background='transparent'">Home</a>
-            <a href="#coaches" style="display: block; padding: 0.75rem 1.25rem; color: #fff; text-decoration: none; font-size: 0.9rem; font-weight: 500;" onmouseover="this.style.background='#2d3e45'" onmouseout="this.style.background='transparent'">Coaching Info</a>
-            <a href="#merch" style="display: block; padding: 0.75rem 1.25rem; color: #fff; text-decoration: none; font-size: 0.9rem; font-weight: 500;" onmouseover="this.style.background='#2d3e45'" onmouseout="this.style.background='transparent'">LBS Merch</a>
-            <a href="#instagram" style="display: block; padding: 0.75rem 1.25rem; color: #fff; text-decoration: none; font-size: 0.9rem; font-weight: 500;" onmouseover="this.style.background='#2d3e45'" onmouseout="this.style.background='transparent'">Instagram</a>
-            <a href="#youtube" style="display: block; padding: 0.75rem 1.25rem; color: #fff; text-decoration: none; font-size: 0.9rem; font-weight: 500;" onmouseover="this.style.background='#2d3e45'" onmouseout="this.style.background='transparent'">Long-Form Videos</a>
+        <div class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+            <span></span>
+            <span></span>
+            <span></span>
         </div>
     </div>
+
+    <div id="dropdown-menu">
+        <a href="#home" onclick="closeMenu()">Home</a>
+        <a href="#coaches" onclick="closeMenu()">Coaching Info</a>
+        <a href="#merch" onclick="closeMenu()">LBS Merch</a>
+        <a href="#instagram" onclick="closeMenu()">Instagram</a>
+        <a href="#youtube" onclick="closeMenu()">Long-Form Videos</a>
+    </div>
+
     <a href="#home" class="nav-brand">
-        <img src="Website-Logo.png" alt="LBS Systems" style="filter: invert(1); height: 40px; width: auto;">
+        <img src="Website-Logo.png" alt="LBS Systems">
     </a>
+
     <div class="nav-right">
-        <a href="#merch" class="btn-teal">SHOP MERCH</a>
-        <a href="#merch" class="cart-icon" aria-label="Cart">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
-                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
-            </svg>
-        </a>
+        <a href="#merch" class="btn-teal">MERCH</a>
     </div>
 </nav>
 
 <!-- HERO -->
 <section class="hero" id="home">
-    <div class="hero-inner" style="gap: 4rem;">
-        <div class="hero-text fade-in" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
-            <h1 style="white-space: nowrap; font-family: 'Zen Dots', sans-serif; font-size: 2.5rem;">Welcome To LBS</h1>
-            <p style="font-family: 'Zen Dots', sans-serif; font-style: italic;">Lifting Beyond Satisfaction</p>
+    <div class="hero-inner">
+        <div class="hero-text fade-in">
+            <h1>Welcome To LBS</h1>
+            <p>Lifting Beyond Satisfaction</p>
         </div>
         <div class="lbs-logo-wrap fade-in" style="transition-delay:0.15s">
-            <img src="Website-Logo.png" alt="LBS Systems logo" class="lbs-logo" style="filter: invert(1); width: 100%;">
+            <img src="Website-Logo.png" alt="LBS Systems logo" class="lbs-logo">
         </div>
     </div>
 </section>
+
+<div class="divider"></div>
+
 <!-- COACHES -->
 <section class="coaches fade-in" id="coaches">
-    <div class="coaches-inner" style="display: flex; flex-direction: column; align-items: center; text-align: center; max-width: 1100px; margin: 0 auto;">
-        <div class="coaches-text" style="margin-bottom: 2.5rem;">
-            <h2 style="font-family: 'Zen Dots', sans-serif;">Meet The Coaches</h2>
-            <p style="max-width: 800px; margin: 1rem auto 2rem; font-family: 'Jost', sans-serif; font-weight: bold;">Are you ready to make the next step forward? Join our team to work with one of our amazing coaches!</p>
-            <a href="https://docs.google.com/forms/d/1nUduH1iLX8FafGHZpOhftumew26ukw6eQG--YZ3Q9gs/viewform?pli=1&pli=1&edit_requested=true" target="_blank" rel="noopener noreferrer" class="btn-teal" style="font-size:0.9rem; padding:0.75rem 1.6rem; border-radius:999px;">
-                Click Here To Work With US!
-            </a>
+    <h2>Meet The Coaches</h2>
+    <p class="coaches-desc">Are you ready to make the next step forward? Join our team to work with one of our amazing coaches!</p>
+    <a href="https://docs.google.com/forms/d/1nUduH1iLX8FafGHZpOhftumew26ukw6eQG--YZ3Q9gs/viewform" target="_blank" rel="noopener noreferrer" class="btn-teal-lg">
+        Click Here To Work With US!
+    </a>
+    <div class="coaches-photos">
+        <div class="coach-card">
+            <img src="Coach-Bruno.jpg" alt="Coach Bruno">
+            <div class="coach-name">Coach Bruno</div>
+            <div class="coach-title">National-Level Coach</div>
         </div>
-        <div class="coaches-photos" style="display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr; gap: 60px; width: 100%;">
-            <div style="text-align: center;">
-                <img src="Coach-Bruno.jpg" alt="Coach 1" style="width: 100%; height: 400px; object-fit: cover; border-radius: 14px;">
-                <p style="margin-top: 0.75rem; font-size: 1rem; font-family: 'Zen Dots', sans-serif; font-weight: 600; color: #ffffff;">Coach Bruno</p>
-                <p style="font-size: 0.85rem; font-family: 'Jost', sans-serif; font-weight: bold; color: #8aa4aa;">National-Level Coach</p>
-            </div>
-            <div style="text-align: center;">
-                <img src="Coach-Liam.jpg" alt="Coach 2" style="width: 100%; height: 400px; object-fit: cover; border-radius: 14px;">
-                <p style="margin-top: 0.75rem; font-size: 1rem; font-family: 'Zen Dots', sans-serif; font-weight: 600; color: #ffffff;">Coach Liam</p>
-                <p style="font-size: 0.85rem; font-family: 'Jost', sans-serif; font-weight: bold; color: #8aa4aa;">National-Level Coach</p>
-            </div>
+        <div class="coach-card">
+            <img src="Coach-Liam.jpg" alt="Coach Liam">
+            <div class="coach-name">Coach Liam</div>
+            <div class="coach-title">National-Level Coach</div>
         </div>
+    </div>
 </section>
 
-<!-- INSTAGRAM -->
-<section id="instagram" style="background: var(--bg-dark); padding: 5rem 4rem; text-align: center;">
-    <h2 style="font-family: 'Zen Dots', sans-serif; margin-bottom: 2rem;">Latest From Instagram</h2>
-    <p style="font-family: 'Jost', sans-serif; color: #8aa4aa; margin-bottom: 2rem;">Follow us <a href="https://www.instagram.com/lbs.systems/" target="_blank" style="color: #1a8a7a;">@LBS.Systems</a> for the latest updates!</p>
-    <!-- Elfsight Instagram Feed | Untitled Instagram Feed -->
-    <script src="https://elfsightcdn.com/platform.js" async></script>
-    <div class="elfsight-app-e286de38-9aad-4d23-95c3-127ca4317241" data-elfsight-app-lazy></div>
-    <div id="instagram-embed"></div>
-</section>
+<div class="divider"></div>
 
 <!-- MERCH -->
 <section class="section fade-in" id="merch">
@@ -406,21 +470,13 @@
         <div class="section-title">Shop Newest LBS Merch!</div>
         <div class="merch-grid">
 
-            <!-- Shirt card → Bonfire -->
-            <a class="merch-card" href="https://www.bonfire.com/store/lbs-systems/" target="_blank" rel="noopener noreferrer" aria-label="LBS x LWKY Competition Shirt on Bonfire">
+            <a class="merch-card" href="https://www.bonfire.com/store/lbs-systems/" target="_blank" rel="noopener noreferrer">
                 <div class="merch-img shirt">
-                    <!-- CSS t-shirt illustration -->
-                    <svg width="160" height="200" viewBox="0 0 160 200" xmlns="http://www.w3.org/2000/svg">
-                        <!-- shirt body -->
-                        <path d="M30 55 L10 80 L35 90 L35 175 L125 175 L125 90 L150 80 L130 55 L105 45 Q80 65 55 45 Z"
-                              fill="#1a1a1a" stroke="#333" stroke-width="1.5"/>
-                        <!-- collar -->
+                    <svg width="100" height="130" viewBox="0 0 160 200" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M30 55 L10 80 L35 90 L35 175 L125 175 L125 90 L150 80 L130 55 L105 45 Q80 65 55 45 Z" fill="#1a1a1a" stroke="#333" stroke-width="1.5"/>
                         <path d="M55 45 Q80 68 105 45" fill="none" stroke="#444" stroke-width="2"/>
-                        <!-- LBS text on chest -->
-                        <text x="80" y="120" font-family="Inter,sans-serif" font-weight="800" font-size="18"
-                              fill="white" text-anchor="middle" opacity="0.9">LBS</text>
-                        <text x="80" y="138" font-family="Inter,sans-serif" font-weight="500" font-size="8"
-                              fill="#888" text-anchor="middle" letter-spacing="2">SYSTEMS</text>
+                        <text x="80" y="120" font-family="sans-serif" font-weight="800" font-size="18" fill="white" text-anchor="middle">LBS</text>
+                        <text x="80" y="138" font-family="sans-serif" font-weight="500" font-size="8" fill="#888" text-anchor="middle" letter-spacing="2">SYSTEMS</text>
                     </svg>
                 </div>
                 <div class="merch-info">
@@ -429,22 +485,15 @@
                 </div>
             </a>
 
-            <!-- Sticker card → Bonfire -->
-            <a class="merch-card" href="https://www.bonfire.com/store/lbs-systems/" target="_blank" rel="noopener noreferrer" aria-label="LBS Sticker on Bonfire">
-                <div class="merch-img sticker" style="background:#222; display:flex; align-items:center; justify-content:center;">
-                    <!-- sticker illustration -->
-                    <svg width="180" height="120" viewBox="0 0 180 120" xmlns="http://www.w3.org/2000/svg">
-                        <!-- water bottle shape -->
-                        <rect x="60" y="5" width="60" height="110" rx="12" fill="#d4c99a" stroke="#b0a870" stroke-width="1.5"/>
-                        <rect x="72" y="0" width="36" height="14" rx="5" fill="#333"/>
-                        <!-- cap -->
-                        <rect x="68" y="5" width="44" height="18" rx="4" fill="#111"/>
-                        <!-- LBS label on bottle -->
-                        <rect x="65" y="42" width="50" height="36" rx="4" fill="#1a1a1a" opacity="0.85"/>
-                        <text x="90" y="62" font-family="Inter,sans-serif" font-weight="800" font-size="15"
-                              fill="white" text-anchor="middle">LBS</text>
-                        <text x="90" y="74" font-family="Inter,sans-serif" font-weight="500" font-size="7"
-                              fill="#aaa" text-anchor="middle" letter-spacing="1">SYSTEMS</text>
+            <a class="merch-card" href="https://www.bonfire.com/store/lbs-systems/" target="_blank" rel="noopener noreferrer">
+                <div class="merch-img sticker">
+                    <svg width="100" height="130" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="60" y="20" width="60" height="110" rx="12" fill="#d4c99a" stroke="#b0a870" stroke-width="1.5"/>
+                        <rect x="72" y="15" width="36" height="14" rx="5" fill="#333"/>
+                        <rect x="68" y="20" width="44" height="18" rx="4" fill="#111"/>
+                        <rect x="65" y="57" width="50" height="36" rx="4" fill="#1a1a1a" opacity="0.85"/>
+                        <text x="90" y="77" font-family="sans-serif" font-weight="800" font-size="15" fill="white" text-anchor="middle">LBS</text>
+                        <text x="90" y="89" font-family="sans-serif" font-weight="500" font-size="7" fill="#aaa" text-anchor="middle" letter-spacing="1">SYSTEMS</text>
                     </svg>
                 </div>
                 <div class="merch-info">
@@ -457,45 +506,67 @@
     </div>
 </section>
 
+<div class="divider"></div>
+
+<!-- INSTAGRAM -->
+<section class="instagram-section fade-in" id="instagram">
+    <h2>Latest From Instagram</h2>
+    <p>Follow us <a href="https://www.instagram.com/lbs.systems/" target="_blank">@LBS.Systems</a> for the latest updates!</p>
+    <script src="https://elfsightcdn.com/platform.js" async></script>
+    <div class="elfsight-app-e286de38-9aad-4d23-95c3-127ca4317241" data-elfsight-app-lazy></div>
+</section>
+
+<div class="divider"></div>
+
 <!-- YOUTUBE -->
-<section id="youtube" style="background: var(--bg-dark); padding: 5rem 4rem; text-align: center;">
-    <h2 style="font-family: 'Zen Dots', sans-serif; margin-bottom: 2rem;">Latest From YouTube</h2>
-    <div style="max-width: 800px; margin: 0 auto;">
+<section class="youtube-section fade-in" id="youtube">
+    <h2>Latest From YouTube</h2>
+    <div class="video-wrap">
         <iframe
-                width="100%"
-                height="450"
-                src="https://www.youtube.com/watch?v=n4kluqkCymw"
-                title="Pikmin sound effect"
-                frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen
-                style="border-radius: 14px;">
+            src="https://www.youtube.com/embed/n4kluqkCymw"
+            title="LBS Systems YouTube"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
         </iframe>
     </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
-    <div>
-        <div class="footer-brand" style="font-family: 'Zen Dots', sans-serif;">LBS Systems</div>
-        <div class="footer-sub" style="font-family: 'Zen Dots', sans-serif; font-style: italic;">Lifting Beyond Satisfaction</div>
-    </div>
+    <div class="footer-brand">LBS Systems</div>
+    <div class="footer-sub">Lifting Beyond Satisfaction</div>
     <ul class="footer-links">
         <li><a href="#home">Home</a></li>
         <li><a href="#coaches">Coaching Info</a></li>
         <li><a href="https://www.bonfire.com/store/lbs-systems/" target="_blank" rel="noopener">LBS Merch</a></li>
         <li><a href="https://www.instagram.com/lbs.systems/" target="_blank" rel="noopener">Instagram</a></li>
-        <li><a href="https://www.instagram.com/lbs.systems/" target="_blank" rel="noopener">YouTube</a></li>
+        <li><a href="#youtube">YouTube</a></li>
     </ul>
-    <div style="font-size:0.75rem; color:#4a6068; font-family: 'Jost', sans-serif;">© 2025 LBS Systems. Est. 2025.</div>
+    <div class="footer-copy">© 2025 LBS Systems. Est. 2025.</div>
 </footer>
 
 <script>
+    function toggleMenu() {
+        const menu = document.getElementById('dropdown-menu');
+        menu.style.display = menu.style.display === 'none' || menu.style.display === '' ? 'block' : 'none';
+    }
+
+    function closeMenu() {
+        document.getElementById('dropdown-menu').style.display = 'none';
+    }
+
+    document.addEventListener('click', function(e) {
+        const menu = document.getElementById('dropdown-menu');
+        if (!e.target.closest('.hamburger') && !e.target.closest('#dropdown-menu')) {
+            menu.style.display = 'none';
+        }
+    });
+
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(e => {
             if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
         });
-    }, { threshold: 0.1 });
+    }, { threshold: 0.08 });
     document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 </script>
 </body>
