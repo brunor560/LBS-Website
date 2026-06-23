@@ -213,12 +213,14 @@
             font-size: clamp(1rem, 4.5vw, 1.3rem);
             font-weight: 400;
             margin-bottom: 1.5rem;
+            text-align; center;
         }
         .merch-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr;
             gap: 1rem;
-            max-width: 500px;
+            max-width: 300px;
+            margin; 0 auto;
         }
         .merch-card {
             background: #fff;
@@ -232,12 +234,19 @@
         .merch-img {
             width: 100%; aspect-ratio: 1;
             display: flex; align-items: center; justify-content: center;
+            background: #1a1a1a;
         }
-        .merch-img.shirt  { background: #1a1a1a; }
-        .merch-img.sticker { background: #222; }
-        .merch-info { padding: 0.6rem 0.75rem 0.75rem; }
-        .merch-name { font-size: 0.8rem; font-weight: 700; color: #111; margin-bottom: 0.2rem; }
-        .merch-price { font-size: 0.78rem; color: #333; }
+        .merch-name{
+            front-size: 0.8rem;
+            front-weight: 700;
+            color: #111;
+            margin-bottom: 0.2rem;
+        }
+
+        .merch-prize{
+            front-size: 0.7rem;
+            color: #333
+        }
 
         /* ── INSTAGRAM ── */
         .instagram {
