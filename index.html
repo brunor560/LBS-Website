@@ -207,21 +207,29 @@
         .merch {
             background: var(--bg-mid);
             padding: 3rem 1.25rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             text-align: center;
+            width: 100%;
         }
+        
         .merch h2 {
             font-family: 'Zen Dots', sans-serif;
             font-size: clamp(1rem, 4.5vw, 1.3rem);
             font-weight: 400;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
             text-align; center;
+            width: 100%;
         }
         
         .merch-grid {
             display: grid;
             grid-template-columns: 1fr;
             gap: 1rem;
-            max-width: 300px;
+            width: 100%;
+            max-width: 320px;
             margin; 0 auto;
         }
         .merch-card {
