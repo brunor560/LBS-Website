@@ -206,70 +206,119 @@
         /* ── MERCH ── */
         .merch {
             background: var(--bg-mid);
-            padding: 3rem 1.25rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            padding: 3rem 0 2.5rem;
             text-align: center;
-            width: 100%;
         }
-        
         .merch h2 {
             font-family: 'Zen Dots', sans-serif;
             font-size: clamp(1rem, 4.5vw, 1.3rem);
             font-weight: 400;
-            margin-bottom: 2rem;
-            text-align; center;
-            width: 100%;
+            margin-bottom: 1.5rem;
+            padding: 0 1.25rem;
         }
-        
-        .merch-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1rem;
-            width: 100%;
-            max-width: 320px;
-            margin; 0 auto;
+ 
+        .merch-carousel {
+            position: relative;
+            max-width: 360px;
+            margin: 0 auto;
         }
+ 
+        /* Scrollable track: one card per "click" of the turnstile */
+        .merch-track {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            padding: 0 1.25rem;
+            gap: 0.75rem;
+            scroll-padding: 0 1.25rem;
+        }
+        .merch-track::-webkit-scrollbar { display: none; }
+ 
         .merch-card {
+            flex: 0 0 100%;
+            scroll-snap-align: center;
+            scroll-snap-stop: always;      /* forces one card per swipe */
             background: #fff;
             border-radius: var(--radius);
             overflow: hidden;
             text-decoration: none;
             display: block;
             -webkit-tap-highlight-color: transparent;
-            transition: opacity 0.2s ease;
         }
-        .merch-card:active { 
-            opacity: 0.85; 
-        }
-        
+        .merch-card:active { opacity: 0.85; }
+ 
         .merch-img {
-            width: 100%; aspect-ratio: 1;
-            display: flex; align-items: center; justify-content: center;
+            width: 100%;
+            aspect-ratio: 1;
             overflow: hidden;
         }
-        
-        .merch-img img{
+        .merch-img img {
             display: block;
             width: 100%;
-            height: 100%
-            object-fit: cover; 
+            height: 100%;
+            object-fit: cover;
         }
-
-        /* — CARD TEXT — */
-        .merch-info { 
-          padding: 0.8rem 0.75rem; 
-          background: #fff;
-          text-align: center; 
+        .merch-info {
+            padding: 0.8rem 0.75rem;
+            background: #fff;
         }
-
-        .merch-name { 
-          font-size: 0.85rem; 
-          font-weight: 700; 
-          color: #111; 
+        .merch-name {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #111;
         }
+ 
+        /* Arrows – hidden on touch-only devices where swiping is natural */
+        .merch-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(30,37,38,0.85);
+            color: #fff;
+            font-size: 1.1rem;
+            line-height: 1;
+            display: none;
+            align-items: center; justify-content: center;
+            cursor: pointer;
+            z-index: 2;
+        }
+        .merch-arrow:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+        .merch-arrow.prev { left: 0.4rem; }
+        .merch-arrow.next { right: 0.4rem; }
+        @media (hover: hover) and (pointer: fine) {
+            .merch-arrow { display: flex; }
+        }
+ 
+        /* Dots */
+        .merch-dots {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        .merch-dots button {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            border: none;
+            padding: 0;
+            background: rgba(255,255,255,0.3);
+            cursor: pointer;
+            transition: background 0.2s ease, width 0.2s ease;
+        }
+        .merch-dots button.active { background: var(--teal); width: 22px; border-radius: 4px; }
+        .merch-dots button:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+ 
+        .merch-hint {
+            margin-top: 0.75rem;
+            font-size: 0.78rem;
+            color: #8aa4aa;
+        }
+        @media (hover: hover) and (pointer: fine) { .merch-hint { display: none; } }
 
         /* ── INSTAGRAM ── */
         .instagram {
@@ -389,34 +438,31 @@
 <!-- MERCH -->
 <section class="merch fade-in" id="merch">
     <h2>Shop Newest LBS Merch</h2>
-    <div class="merch-grid">
-        <a class="merch-card" href="https://www.bonfire.com/lbs-classic-collection/?productType=bacf6cd6-b53d-469c-ab96-02afe5b15f71" target="_blank" rel="noopener noreferrer">
-            <div class="merch-img shirt">
-                <img src="ClassicMock.png" alt="LBS Classic Collection Merch" style="display: block; max-width: 100%; height: auto; margin: 0 auto;">
-            </div>
-            <div class="merch-info">
-                <div class="merch-name">LBS Classic Collection</div>
-            </div>
-        </a>
-        <a class="merch-card" href="https://www.bonfire.com/lbs-industrial-cobalt-collection/?productType=bacf6cd6-b53d-469c-ab96-02afe5b15f71" target="_blank" rel="noopener noreferrer">
-            <div class="merch-img shirt">
-                <img src="CobaltMock.png" alt="LBS Industrial Colbalt Merch" style="display: block; max-width: 100%; height: auto; margin: 0 auto;">
-            </div>
-            <div class="merch-info">
-                <div class="merch-name">LBS Cobalt Blue Collection</div>
-            </div>
-        </a>
-        <a class="merch-card" href="https://www.bonfire.com/lbs-graphic-collection-ultra-violet/" target="_blank" rel="noopener noreferrer">
-            <div class="merch-img shirt">
-                <img src="UltraViolet.png" alt="LBS Ultra Violet Merch" style="display: block; max-width: 100%; height: auto; margin: 0 auto;">
-            </div>
-            <div class="merch-info">
-                <div class="merch-name">LBS Ultra Violet Collection</div>
-            </div>
-        </a>
+ 
+    <div class="merch-carousel">
+        <button class="merch-arrow prev" type="button" aria-label="Previous item" onclick="merchStep(-1)">&#8249;</button>
+        <button class="merch-arrow next" type="button" aria-label="Next item" onclick="merchStep(1)">&#8250;</button>
+ 
+        <div class="merch-track" id="merch-track" aria-label="Merch collections">
+            <a class="merch-card" href="https://www.bonfire.com/lbs-classic-collection/?productType=bacf6cd6-b53d-469c-ab96-02afe5b15f71" target="_blank" rel="noopener noreferrer">
+                <div class="merch-img"><img src="ClassicMock.png" alt="LBS Classic Collection Merch"></div>
+                <div class="merch-info"><div class="merch-name">LBS Classic Collection</div></div>
+            </a>
+            <a class="merch-card" href="https://www.bonfire.com/lbs-industrial-cobalt-collection/?productType=bacf6cd6-b53d-469c-ab96-02afe5b15f71" target="_blank" rel="noopener noreferrer">
+                <div class="merch-img"><img src="CobaltMock.png" alt="LBS Industrial Cobalt Merch"></div>
+                <div class="merch-info"><div class="merch-name">LBS Cobalt Blue Collection</div></div>
+            </a>
+            <a class="merch-card" href="https://www.bonfire.com/lbs-graphic-collection-ultra-violet/" target="_blank" rel="noopener noreferrer">
+                <div class="merch-img"><img src="UltraViolet.png" alt="LBS Ultra Violet Merch"></div>
+                <div class="merch-info"><div class="merch-name">LBS Ultra Violet Collection</div></div>
+            </a>
+        </div>
+ 
+        <div class="merch-dots" id="merch-dots" role="tablist" aria-label="Choose collection"></div>
+        <p class="merch-hint">Swipe to see more</p>
     </div>
 </section>
-
+ 
 <div class="divider"></div>
 
 <!-- INSTAGRAM -->
