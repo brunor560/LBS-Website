@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&family=Zen+Dots&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Refund Policy | LBS Systems</title>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg-dark: #1e2526;
+            --bg-mid:  #2d3e45;
+            --teal:    #1a8a7a;
+            --teal-h:  #16796b;
+            --text:    #ffffff;
+            --muted:   #c5d0d2;
+            --radius:  14px;
+        }
+
+        html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+        body {
+            font-family: 'Jost', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+            background: var(--bg-dark);
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 1rem;
+            height: 56px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .hamburger {
+            display: flex; flex-direction: column; gap: 5px;
+            padding: 12px; margin: -12px;
+            cursor: pointer; -webkit-tap-highlight-color: transparent;
+        }
+        .hamburger span { display: block; width: 22px; height: 2px; background: #fff; border-radius: 2px; }
+
+        #dropdown-menu {
+            display: none;
+            position: absolute; top: 56px; left: 0; right: 0;
+            background: #1a2223;
+            border-bottom: 2px solid var(--teal);
+            z-index: 999;
+        }
+        #dropdown-menu a {
+            display: block;
+            padding: 1rem 1.5rem;
+            color: #fff;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            -webkit-tap-highlight-color: transparent;
+        }
+        #dropdown-menu a:active { background: #2d3e45; }
+
+        .nav-center {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            padding: 0 0.5rem;
+            overflow: hidden;
+        }
+        .nav-center img { height: 30px; width: auto; filter: invert(1); display: block; max-width: 100%; }
+
+        .page-head {
+            padding: 100px 1.25rem 2.5rem;
+            text-align: center;
+            background: var(--bg-dark);
+        }
+        .page-head h1 {
+            font-family: 'Zen Dots', sans-serif;
+            font-size: clamp(1.4rem, 6vw, 2.2rem);
+            font-weight: 400;
+            line-height: 1.25;
+        }
+
+        .divider {
+            height: 3px;
+            background: linear-gradient(to right, transparent, var(--teal), transparent);
+        }
+
+        .legal-content {
+            background: var(--bg-mid);
+            padding: 2rem 1.25rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .legal-content h2 {
+            font-family: 'Zen Dots', sans-serif;
+            font-size: 1.25rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            color: var(--teal);
+        }
+
+        .legal-content h3 {
+            font-family: 'Jost', sans-serif;
+            font-size: 1.05rem;
+            margin-top: 1.25rem;
+            margin-bottom: 0.6rem;
+            font-weight: 600;
+        }
+
+        .legal-content p, .legal-content li {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: var(--muted);
+            margin-bottom: 0.9rem;
+        }
+
+        .legal-content ul, .legal-content ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .legal-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        .legal-content a {
+            color: var(--teal);
+            text-decoration: none;
+        }
+        .legal-content a:hover {
+            text-decoration: underline;
+        }
+
+        .highlight-box {
+            background: rgba(26, 138, 122, 0.15);
+            border-left: 4px solid var(--teal);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+        }
+
+        table th, table td {
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 0.8rem;
+            text-align: left;
+        }
+
+        table th {
+            background: rgba(26, 138, 122, 0.2);
+            color: var(--teal);
+            font-weight: 600;
+        }
+
+        .last-updated {
+            font-size: 0.85rem;
+            color: #8aa4aa;
+            font-style: italic;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+        }
+
+        .back-wrap { background: var(--bg-dark); padding: 2rem 1.25rem; text-align: center; }
+        .back-link {
+            color: var(--teal);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        footer {
+            background: var(--bg-dark);
+            border-top: 1px solid rgba(255,255,255,0.07);
+            padding: 2rem 1.25rem;
+            text-align: center;
+        }
+        .footer-brand { font-family: 'Zen Dots', sans-serif; font-size: 1rem; margin-bottom: 0.25rem; }
+        .footer-sub { font-family: 'Jost', sans-serif; font-style: italic; color: #6a8a92; font-size: 0.9rem; margin-bottom: 1.5rem; }
+        .footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.4rem 1rem; list-style: none; margin-bottom: 1.25rem; }
+        .footer-links a { font-size: 0.82rem; color: #6a8a92; text-decoration: none; padding: 0.25rem 0; }
+        .footer-copy { font-size: 0.72rem; color: #4a6068; }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+        <span></span><span></span><span></span>
+    </div>
+    <div id="dropdown-menu">
+        <a href="index.html#home">Home</a>
+        <a href="index.html#coaches">Meet The Coaches</a>
+        <a href="coaching.html">Coaching Options</a>
+        <a href="index.html#merch">LBS Merch</a>
+        <a href="index.html#instagram">Instagram</a>
+        <a href="index.html#youtube">YouTube</a>
+    </div>
+    <div class="nav-center">
+        <a href="index.html#home"><img src="Website-Logo.png" alt="LBS Systems"></a>
+    </div>
+    <div style="width:46px;flex-shrink:0;"></div>
+</nav>
+
+<section class="page-head">
+    <h1>Refund Policy</h1>
+</section>
+
+<div class="divider"></div>
+
+<section class="legal-content">
+    <div class="last-updated">Last Updated: September 16, 2026</div>
+
+    <h2>1. Refund Policy Overview</h2>
+    <p>
+        LBS Systems is committed to your satisfaction. This policy outlines the conditions under which refunds are issued, refund timelines, and how to request a refund. This policy applies to all coaching services and payments made through our website.
+    </p>
+
+    <div class="highlight-box">
+        <strong>Quick Summary:</strong> 7-day satisfaction guarantee for new coaching clients. Non-refundable services include recovery programs once started and meet day handling after the competition date.
+    </div>
+
+    <h2>2. Refund Policy By Service Type</h2>
+
+    <h3>A. Powerlifting Coaching ($40/month)</h3>
+
+    <h4>Refundable Scenarios</h4>
+    <table>
+        <thead>
+        <tr>
+            <th>Scenario</th>
+            <th>Refund Eligible?</th>
+            <th>Amount</th>
+            <th>Timeline</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>First month (within 7 days of start)</td>
+            <td>✓ Yes</td>
+            <td>100% of $40</td>
+            <td>5-7 business days</td>
+        </tr>
+        <tr>
+            <td>Dissatisfaction with program</td>
+            <td>✓ Yes (within 7 days)</td>
+            <td>100% of $40</td>
+            <td>5-7 business days</td>
+        </tr>
+        <tr>
+            <td>After 7-day trial period</td>
+            <td>✗ No</td>
+            <td>N/A</td>
+            <td>N/A</td>
+        </tr>
+        <tr>
+            <td>Duplicate charge (billing error)</td>
+            <td>✓ Yes</td>
+            <td>100% of duplicate charge</td>
+            <td>5-7 business days</td>
+        </tr>
+        <tr>
+            <td>Coach did not deliver services</td>
+            <td>✓ Yes (pro-rated)</td>
+            <td>Pro-rated amount</td>
+            <td>5-7 business days</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h4>Non-Refundable Scenarios</h4>
+    <ul>
+        <li>After the 7-day satisfaction period (continuing subscription is non-refundable)</li>
+        <li>Client did not follow program or engage with coaching</li>
+        <li>Client cancelled and then requests refund after cancellation period</li>
+        <li>Chargebacks filed with your bank (instead of requesting refund first)</li>
+    </ul>
+
+    <h4>Cancellation Terms</h4>
+    <ul>
+        <li>To avoid the next monthly charge, you must cancel before your billing date</li>
+        <li>Cancellation can be submitted at any time via email: <a href="mailto:lbspowerlifting@gmail.com">lbspowerlifting@gmail.com</a></li>
+        <li>Your subscription will end at the end of your current billing period</li>
+        <li>No refund is issued for the current billing month once a charge has posted (unless within 7-day trial)</li>
+        <li>You will retain access to coaching through the end of your paid period</li>
+    </ul>
+
+    <h3>B. In-Person Coaching</h3>
+
+    <h4>Refundable Scenarios</h4>
+    <ul>
+        <li><strong>Cancelled within 48 hours before session:</strong> Full refund of session cost</li>
+        <li><strong>Coach cancellation:</strong> Full refund or rescheduling option</li>
+        <li><strong>Billing error or duplicate charge:</strong> 100% refund of overage</li>
+    </ul>
+
+    <h4>Non-Refundable Scenarios</h4>
+    <ul>
+        <li><strong>No-show (client does not appear):</strong> No refund; charge stands</li>
+        <li><strong>Cancelled less than 48 hours before session:</strong> No refund (charge applies)</li>
+        <li><strong>Client-initiated cancellation:</strong> Non-refundable; may reschedule</li>
+    </ul>
+
+    <h4>Cancellation & Rescheduling</h4>
+    <ul>
+        <li>To cancel a session, email <a href="mailto:lbspowerlifting@gmail.com">lbspowerlifting@gmail.com</a> at least 48 hours before your scheduled time</li>
+        <li>To reschedule, provide at least 7 days notice for best availability</li>
+        <li>If you miss a session (no-show), your account will be flagged and you may be required to pay upfront for future sessions</li>
+    </ul>
+
+    <h3>C. Recovery Coaching ($30 one-time)</h3>
+
+    <h4>Refundable Scenarios</h4>
+    <table>
+        <thead>
+        <tr>
+            <th>Scenario</th>
+            <th>Refund Eligible?</th>
+            <th>Amount</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Before pre-recovery call scheduled</td>
+            <td>✓ Yes</td>
+            <td>100% of $30</td>
+        </tr>
+        <tr>
+            <td>During pre-recovery call (before program starts)</td>
+            <td>✓ Yes</td>
+            <td>100% of $30</td>
+        </tr>
+        <tr>
+            <td>Billing error or duplicate charge</td>
+            <td>✓ Yes</td>
+            <td>100% of duplicate charge</td>
+        </tr>
+        <tr>
+            <td>After program starts (during 1-week recovery)</td>
+            <td>✗ No</td>
+            <td>N/A</td>
+        </tr>
+        <tr>
+            <td>Coach did not provide services</td>
+            <td>✓ Yes</td>
+            <td>100% of $30</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h4>Important Notes</h4>
+    <ul>
+        <li><strong>Non-refundable once started:</strong> Once the 1-week recovery program begins (after pre-recovery call), refunds are not available</li>
+        <li>Recovery programs are custom-designed for your specific pain/aches—once personalized, they cannot be resold</li>
+        <li>If you need to pause or stop mid-program, contact your coach to discuss options (refund unlikely)</li>
+    </ul>
+
+    <h3>D. Meet Day Handling ($30 + travel fees)</h3>
+
+    <h4>Refundable Scenarios</h4>
+    <ul>
+        <li><strong>Before competition date (7+ days notice):</strong> Full refund of $30 + travel fees</li>
+        <li><strong>Less than 7 days notice:</strong> $30 refund only; travel fees are non-refundable (already incurred/committed)</li>
+        <li><strong>After competition date:</strong> No refund (service provided)</li>
+        <li><strong>Coach cancellation:</strong> Full refund including travel fees</li>
+        <li><strong>Billing error:</strong> Full refund of overage</li>
+    </ul>
+
+    <h4>Important Notes</h4>
+    <ul>
+        <li>Travel fees are quoted upfront and based on distance/hotel requirements</li>
+        <li>Travel fees are non-refundable if cancelled less than 7 days before the meet (coach may have already booked travel)</li>
+        <li>If coach cannot attend due to emergency, full refund including travel fees will be issued</li>
+    </ul>
+
+    <h2>3. How to Request a Refund</h2>
+
+    <h3>Step 1: Email Your Request</h3>
+    <p>
+        Send a refund request email to:
+    </p>
+    <p>
+        <strong>Email:</strong> <a href="mailto:lbspowerlifting@gmail.com">lbspowerlifting@gmail.com</a><br>
+        <strong>Subject Line:</strong> "Refund Request - [Your Name]"
+    </p>
+
+    <h3>Step 2: Include Required Information</h3>
+    <p>
+        Provide the following details in your email:
+    </p>
+    <ul>
+        <li>Your full name</li>
+        <li>Email address associated with your account</li>
+        <li>Type of service (Powerlifting, In-Person, Recovery, Meet Day Handling)</li>
+        <li>Date of purchase/payment</li>
+        <li>Amount paid (e.g., $40, $30)</li>
+        <li>Reason for refund request (be specific)</li>
+    </ul>
+
+    <h3>Step 3: Response Timeline</h3>
+    <ul>
+        <li><strong>Response within 5 business days:</strong> We will review your request and respond via email</li>
+        <li><strong>Approval notification:</strong> If approved, we will process the refund to your original payment method</li>
+        <li><strong>Refund delivery:</strong> Refunds typically appear in your bank account within 5-7 business days (depending on your bank)</li>
+    </ul>
+
+    <h3>Step 4: Credit Card Company Disputes</h3>
+    <p>
+        <strong>Important:</strong> We strongly recommend requesting a refund through us first before filing a dispute with your credit card company. Filing a chargeback:
+    </p>
+    <ul>
+        <li>Makes refunds harder to process</li>
+        <li>May result in account suspension</li>
+        <li>Costs LBS Systems additional fees</li>
+    </ul>
+
+    <h2>4. Refund Processing</h2>
+
+    <h3>Refund Timeline</h3>
+    <ul>
+        <li><strong>Approval:</strong> 3-5 business days from receipt of refund request</li>
+        <li><strong>Processing:</strong> Refund issued to original payment method within 1-2 business days of approval</li>
+        <li><strong>Bank deposit:</strong> 5-7 business days (varies by your bank)</li>
+        <li><strong>Total time:</strong> 1-3 weeks is typical</li>
+    </ul>
+
+    <h3>Partial Refunds & Pro-Rated Amounts</h3>
+    <p>
+        If you request a refund partway through a billing cycle, we may issue a pro-rated refund based on the days remaining:
+    </p>
+    <ul>
+        <li><strong>Formula:</strong> (Days Remaining ÷ Days in Billing Period) × Total Amount</li>
+        <li><strong>Example:</strong> If you have 10 days left in a 30-day month, you'd be refunded approximately 33% of the monthly fee</li>
+    </ul>
+
+    <h2>5. Specific Refund Scenarios & FAQs</h2>
+
+    <h3>Q: Can I get a refund if I didn't use my coaching sessions?</h3>
+    <p>
+        <strong>A:</strong> For Powerlifting Coaching: Yes, within 7 days of purchase if you haven't engaged with the service. For In-Person: No, if you did not cancel within 48 hours. Recovery & Meet Day: No, if services have been initiated.
+    </p>
+
+    <h3>Q: What if I want to pause coaching instead of cancel?</h3>
+    <p>
+        <strong>A:</strong> Contact us at <a href="mailto:lbspowerlifting@gmail.com">lbspowerlifting@gmail.com</a> to discuss pausing your subscription temporarily (1-3 months). Pauses are considered on a case-by-case basis.
+    </p>
+
+    <h3>Q: Can I get a refund after I've completed the service?</h3>
+    <p>
+        <strong>A:</strong> No, refunds are only available before or during services as outlined above. Once services are completed, refunds are not available (satisfaction period has passed).
+    </p>
+
+    <h3>Q: What if my coach didn't respond or provide services?</h3>
+    <p>
+        <strong>A:</strong> If LBS Systems fails to deliver coaching services or communication, you are eligible for a full refund or pro-rated refund depending on how much of the service period has passed. Document your concerns and submit to <a href="lbspowerlifting@gmail.com">lbspowerlifting@gmail.com</a>.
+    </p>
+
+    <h3>Q: Can I transfer my payment to a different coach?</h3>
+    <p>
+        <strong>A:</strong> Yes, you can request to switch coaches at no additional cost. Email <a href="mailto:lbspowerlifting@gmail.com">lbspowerlifting@gmail.com</a> to request a coach change.
+    </p>
+
+    <h3>Q: What if I was charged twice by mistake?</h3>
+    <p>
+        <strong>A:</strong> Duplicate charges are refundable in full. Email us immediately with proof of both charges and we will process a full refund of the duplicate charge within 5 business days.
+    </p>
+
+    <h3>Q: Will I lose access to my coaching materials after a refund?</h3>
+    <p>
+        <strong>A:</strong> After a refund is processed, access to your coaching materials and WhatsApp communication will be terminated. Download any materials you wish to keep before submitting a refund request.
+    </p>
+
+    <h2>6. No Refund Guarantee Policies</h2>
+
+    <p>
+        <strong>The following are explicitly non-refundable:</strong>
+    </p>
+    <ul>
+        <li>Continued subscription months after the 7-day trial period</li>
+        <li>Services rendered (coaching that has already occurred)</li>
+        <li>In-person sessions attended by the client</li>
+        <li>Recovery programs that have begun</li>
+        <li>Meet day handling after the competition has occurred</li>
+        <li>Fees paid for content you have downloaded or materials you have received</li>
+        <li>Changes your mind after engaging with coaching services</li>
+    </ul>
+
+    <h2>7. Payment Issues & Disputes</h2>
+
+    <h3>Chargebacks & Credit Card Disputes</h3>
+    <p>
+        If you file a chargeback with your credit card company instead of requesting a refund:
+    </p>
+    <ul>
+        <li>You may be required to pay chargeback fees ($15-$100)</li>
+        <li>Your coaching account will be suspended immediately</li>
+        <li>You may be banned from future LBS Systems services</li>
+        <li>We will defend against the chargeback, which may delay resolution</li>
+    </ul>
+    <p>
+        <strong>Always contact us first to resolve payment disputes.</strong>
+    </p>
+
+    <h3>Billing Errors</h3>
+    <p>
+        If you notice a billing error or unauthorized charge:
+    </p>
+    <ul>
+        <li>Contact us immediately at <a href="mailto:lbspowerlifting@gmail.com">lbspowerlifting@gmail.com</a></li>
+        <li>Provide details of the error (date, amount, description)</li>
+        <li>We will investigate and issue a refund if an error is confirmed</li>
+        <li>Refund will be processed within 5 business days</li>
+    </ul>
+
+    <h2>8. Stripe Payment Processing</h2>
+    <p>
+        All payments are processed securely through Stripe. Our refund requests are transmitted through Stripe to your bank.
+    </p>
+    <ul>
+        <li>Refunds are issued to your original payment method</li>
+        <li>Your bank processes the refund (not Stripe or LBS Systems)</li>
+        <li>Bank processing time varies (typically 5-7 business days)</li>
+    </ul>
+    <p>
+        For questions about Stripe payment processing, see <a href="https://stripe.com/privacy" target="_blank" rel="noopener">Stripe's Privacy Policy</a>.
+    </p>
+
+    <h2>9. International Clients & Currency</h2>
+    <p>
+        If you are an international client paying in USD:
+    </p>
+    <ul>
+        <li>Refunds are issued in USD</li>
+        <li>Currency conversion fees may apply (your bank may charge a conversion fee)</li>
+        <li>You are responsible for any currency exchange differences</li>
+    </ul>
+
+    <h2>10. Changes to Refund Policy</h2>
+    <p>
+        We may update this Refund Policy at any time. Changes will be posted on this page with an updated date. Refund requests submitted before the change date will be processed under the previous policy.
+    </p>
+
+    <h2>11. Contact & Support</h2>
+    <p>
+        For refund requests, billing questions, or payment disputes:
+    </p>
+    <p>
+        <strong>Email:</strong> <a href="mailto:lbspowerlifting@gmail.com">lbspowerlifting@gmail.com</a><br>
+        <strong>Response time:</strong> 5 business days<br>
+        <strong>Address:</strong> Tampa, Florida
+    </p>
+
+    <p style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.07); font-size: 0.85rem; color: #8aa4aa;">
+        <strong>Disclaimer:</strong> This Refund Policy is provided for informational purposes and works in conjunction with our <a href="terms-conditions.html">Terms & Conditions</a>. For legal questions, consult with an attorney licensed in Florida.
+    </p>
+
+</section>
+
+<div class="divider"></div>
+
+<div class="back-wrap">
+    <a class="back-link" href="index.html#home">&larr; Back to LBS Systems</a>
+</div>
+
+<footer>
+    <div class="footer-brand">LBS Systems</div>
+    <div class="footer-sub">Lifting Beyond Satisfaction</div>
+    <ul class="footer-links">
+        <li><a href="index.html#home">Home</a></li>
+        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+        <li><a href="terms-conditions.html">Terms & Conditions</a></li>
+        <li><a href="cookie-policy.html">Cookie Policy</a></li>
+        <li><a href="refund-policy.html">Refund Policy</a></li>
+    </ul>
+    <div class="footer-copy">© 2025 LBS Systems. Est. 2025.</div>
+</footer>
+
+<script>
+    function toggleMenu() {
+        const menu = document.getElementById('dropdown-menu');
+        menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+    }
+    function closeMenu() {
+        document.getElementById('dropdown-menu').style.display = 'none';
+    }
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.hamburger') && !e.target.closest('#dropdown-menu')) {
+            closeMenu();
+        }
+    });
+</script>
+
+</body>
+</html>
